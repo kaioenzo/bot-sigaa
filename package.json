@@ -1,0 +1,19 @@
+{
+  "name": "bot-sigaa",
+  "version": "1.0.0",
+  "description": "Bot para procurar matẽrias no SIGAA-UnB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "bot-sigaa"
+  },
+  "author": "Kaio Enzo Silva de Melo Salgado",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^23.5.3"
+  }
+}
