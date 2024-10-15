@@ -1,11 +1,14 @@
 const { default: puppeteer } = require("puppeteer");
 
-const loginSigaa = ""; // seu login do sigaa
-const senhaSigaa = ""; // sua senha do sigaa
+const loginSigaa = "";
+const senhaSigaa = "";
 
-const materias = ["FGA0075"]; // coloque sem espacos o nome, codigo ou os dois no formato "codige - nomeDaMateria"
+async function buscarMateria(materia) {
+  if (!materia) {
+    console.log("Materia invalida");
+    return "materia invalida";
+  }
 
-(async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
@@ -69,26 +72,22 @@ const materias = ["FGA0075"]; // coloque sem espacos o nome, codigo ou os dois n
     return;
   }
 
-  materias.forEach(async (materia) => {
-    const materiaEncontrada = await page.evaluate((inputText) => {
-      const regexPattern = new RegExp(inputText, "i");
+  const materiaEncontrada = await page.evaluate((inputText) => {
+    const regexPattern = new RegExp(inputText, "i");
 
-      const elements = [...document.querySelectorAll("a")];
+    const elements = [...document.querySelectorAll("a")];
 
-      const element = elements.find((el) => {
-        const text = el.textContent.trim();
-        return regexPattern.test(text);
-      });
+    const element = elements.find((el) => {
+      const text = el.textContent.trim();
+      return regexPattern.test(text);
+    });
 
-      return !!element;
-    }, materia);
-
-    if (materiaEncontrada) {
-      console.log("Materia encontrada!");
-    } else {
-      console.log("Materia nao encontrada");
-    }
-  });
+    return !!element;
+  }, materia);
 
   await browser.close();
-})();
+
+  return materiaEncontrada;
+}
+
+module.exports = { buscarMateria };
